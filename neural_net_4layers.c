@@ -8,7 +8,7 @@
 #include "MNIST/mnist.h"
 
 #define NumInput 784
-#define NumHidden 30
+#define NumHidden 100
 #define NumHidden2 30
 #define NumOutput 10
 #define eta 0.1
@@ -100,7 +100,7 @@ int main(void){
 		for(j = 1; j <= NumHidden2; j++){
 			SumHidden2[j] = WeightHH[0][j];
 			for(i = 1; i <= NumHidden; i++)
-				SumHidden2[j] += Input[i] * WeightHH[i][j];
+				SumHidden2[j] += Hidden[i] * WeightHH[i][j];
 			Hidden2[j] = 1.0/(1.0+exp(-SumHidden2[j]));
 		}
 
@@ -167,7 +167,7 @@ int main(void){
 						Input[j*28+k] = test_data[i].data[j][k-1];
 					}
 				}	
-
+				
 				for(j = 1; j <= NumHidden; j++){ 
 					SumHidden[j] = WeightIH[0][j];
 					for(k = 1; k <= NumInput; k++){
@@ -178,8 +178,8 @@ int main(void){
 				
 				for(j = 1; j <= NumHidden2; j++){
 					SumHidden2[j] = WeightHH[0][j];
-					for(i = 1; i <= NumHidden; i++)
-						SumHidden2[j] += Hidden[i] * WeightHH[i][j];
+					for(k = 1; k <= NumHidden; k++)
+						SumHidden2[j] += Hidden[k] * WeightHH[k][j];
 					Hidden2[j] = 1.0/(1.0+exp(-SumHidden2[j]));
 				}
 
@@ -193,8 +193,8 @@ int main(void){
 
 				int max = 0;
 				double max_result = 0;
-				for(int l = 1; l <= 10; l++){
-					if(max_result < Output[l]) { max_result = Output[l]; max = l; }
+				for(k = 1; k <= 10; k++){
+					if(max_result < Output[k]) { max_result = Output[k]; max = k; }
 				}
 				if(max == test_data[i].label) correct_num++;
 			}
