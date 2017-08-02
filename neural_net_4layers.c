@@ -8,7 +8,7 @@
 #include "MNIST/mnist.h"
 
 #define NumInput 784
-#define NumHidden 100
+#define NumHidden 50
 #define NumHidden2 30
 #define NumOutput 10
 #define eta 0.1
@@ -156,10 +156,8 @@ int main(void){
 			}	
 		}
 
-		if(cnt % 1000 == 0){	
+		if(cnt % 10000 == 0){	
 			int correct_num = 0;
-	
-			printf("cnt is %d, Error value is %lf.\n", cnt, Error);
 		
 			for(i = 0; i < 10000; i++){
 				for(j = 0; j < 28; j++){
