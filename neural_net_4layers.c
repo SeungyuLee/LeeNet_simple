@@ -11,8 +11,8 @@
 #define NumHidden 50
 #define NumHidden2 30
 #define NumOutput 10
-#define eta 0.1
-#define alpha 0 // momentum value
+#define eta 0.05
+#define alpha 0.9 // momentum value
 
 double gaussian_rand(void);
 
@@ -34,6 +34,7 @@ double SumDOW[NumHidden+1];
 double Error;
 int i, j, k;
 int cnt = 0;
+int times = 0;
 
 double Hidden2[NumHidden2+1];
 double SumHidden2[NumHidden2+1];
@@ -110,7 +111,21 @@ int main(void){
 				SumOutput[k] += Hidden2[j] * WeightHO[j][k];
 			}
 			Output[k] = 1.0/(1.0+exp(-SumOutput[k]));
-			Error += 0.5 * (Target[k] - Output[k]) * (Target[k] - Output[k]);
+		}
+
+		/*
+		// Softmax Function
+		double SumExpOut = 0.0;
+		for(k = 1; k <= NumOutput; k++){
+			SumExpOut += exp(Output[k]);
+		} 
+		for(k = 1; k <= NumOutput; k++){
+			Output[k] = exp(Output[k]) / SumExpOut;
+		}
+		*/
+		for(k = 1; k <= NumOutput; k++){
+		//	Error += 0.5 * (Target[k] - Output[k]) * (Target[k] - Output[k]); // Mean-Squared Error
+			Error += -(log(Output[k])*Target[k]); // Cross-Entropy Error 
 			DeltaOutput[k] = (Target[k] - Output[k]) * Output[k] * (1.0-Output[k]);
 		}
 
@@ -188,6 +203,14 @@ int main(void){
 					}
 					Output[k] = 1.0/(1.0+exp(-SumOutput[k]));
 				}
+			// Softmax Function
+				double SumExpOut = 0.0;
+				for(k = 1; k <= NumOutput; k++){
+					SumExpOut += exp(Output[k]);
+				} 
+				for(k = 1; k <= NumOutput; k++){
+					Output[k] = exp(Output[k]) / SumExpOut;
+				}
 
 				int max = 0;
 				double max_result = 0;
@@ -200,7 +223,10 @@ int main(void){
 			printf("correct number: %d / 10000\n", correct_num);
 			
 	}
-	
+	if(cnt == 60000 && times < 5) {
+		cnt = 0;	
+		printf("%dth epoch has been finished\n", ++times);
+	}
 	
 	}
 	return 0;
@@ -229,3 +255,4 @@ double gaussian_rand(void)
 	phase = 1 - phase;
 	return Z;
 }
+
