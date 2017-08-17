@@ -9,4 +9,6 @@ you can compile the program and execute it with this command on Mac or Linux
 > gcc -O2 neural_net_4layers.c -o test && ./test
 
 
-reference: http://www.cs.bham.ac.uk/~jxb/INC/nn.html
+reference: 
+http://www.cs.bham.ac.uk/~jxb/INC/nn.html
+https://github.com/projectgalateia/mnist
