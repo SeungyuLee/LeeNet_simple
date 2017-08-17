@@ -6,8 +6,7 @@ It is just basic and elementary level so that the correctness reaches only to 85
 
 you can compile the program and execute it with this command on Mac or Linux
 
-> gcc -O2 neural_net_4layers.c -o test
-> ./test
+> gcc -O2 neural_net_4layers.c -o test && ./test
 
 
 reference: http://www.cs.bham.ac.uk/~jxb/INC/nn.html
